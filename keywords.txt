@@ -1,0 +1,4 @@
+pushButton	KEYWORD1
+wasPressed	KEYWORD2
+retentionState	KEYWORD2
+pressedFor	KEYWORD2

@@ -8,13 +8,13 @@ class pushButton
     pushButton(int pin);
     //Interface
     bool wasPressed(void);
+    bool wasPressed(int _debounce);
     bool wasReleased(void);
     bool retentionState(void);
     uint64_t pressedFor(void);
   private:
     //Control Variables
     int _pin;
-    uint64_t delayBotao = 0;
     uint64_t firstPress = 0;
     uint64_t beenPressedFor = 0;    
     bool retention = false;

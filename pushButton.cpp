@@ -6,7 +6,7 @@
 #include "Arduino.h"
 #include "pushButton.h"
 
-#define tempoDebounce 50
+#define debounce 50
 
 pushButton::pushButton(int pin)
 {
@@ -17,17 +17,37 @@ pushButton::pushButton(int pin)
 bool pushButton::wasPressed()
 {
   bool answer = false;
+  static uint64_t then = millis();
 
-  if( (millis() - delayBotao) >  tempoDebounce )
+  estadoAtual = digitalRead(_pin);
+  if(!estadoAtual && estadoAnterior)
   {
-    estadoAtual = digitalRead(_pin);
-    if(!estadoAtual && estadoAnterior)
+    if(millis() - then > debounce)
     {
       answer = true;
-      delayBotao = millis();
+      then = millis();
     }
-    estadoAnterior = estadoAtual;
   }
+  estadoAnterior = estadoAtual;
+
+  return answer;
+}
+
+bool pushButton::wasPressed(int _debounce)
+{
+  bool answer = false;
+  static uint64_t then = millis();
+
+  estadoAtual = digitalRead(_pin);
+  if(!estadoAtual && estadoAnterior)
+  {
+    if(millis() - then > _debounce)
+    {
+      answer = true;
+      then = millis();
+    }
+  }
+  estadoAnterior = estadoAtual;
 
   return answer;
 }
@@ -35,52 +55,52 @@ bool pushButton::wasPressed()
 bool pushButton::wasReleased()
 {
   bool answer = false;
+  static uint64_t then = millis();
 
-  if( (millis() - delayBotao) >  tempoDebounce )
+  estadoAtual = digitalRead(_pin);
+  if(estadoAtual && !estadoAnterior)
   {
-    estadoAtual = digitalRead(_pin);
-    if(estadoAtual && !estadoAnterior)
+    if(millis() - then > debounce)
     {
       answer = true;
-      delayBotao = millis();
+      then = millis();
     }
-    estadoAnterior = estadoAtual;
   }
+  estadoAnterior = estadoAtual;
 
   return answer;
 }
 
 bool pushButton::retentionState()
 {
-  if( (millis() - delayBotao) >  tempoDebounce )
+  static uint64_t then = millis();
+
+  estadoAtual = digitalRead(_pin);
+  if(!estadoAtual && estadoAnterior)
   {
-    estadoAtual = digitalRead(_pin);
-    if(!estadoAtual && estadoAnterior)
+    if(millis() - then > debounce)
     {
       retention = !retention;
-      delayBotao = millis();
+      then = millis();
     }
-    estadoAnterior = estadoAtual;
   }
+  estadoAnterior = estadoAtual;
 
   return retention;
 }
 
 uint64_t pushButton::pressedFor()
 {
-  if( (millis() - delayBotao) >  tempoDebounce )
+  estadoAtual = digitalRead(_pin);
+  if(!estadoAtual && estadoAnterior)
   {
-    estadoAtual = digitalRead(_pin);
-    if(!estadoAtual && estadoAnterior)
-    {
-      firstPress = millis();
-      delayBotao = millis();
-    }
-    estadoAnterior = estadoAtual;
-    if(estadoAtual)
-      beenPressedFor = 0;
-    else
-      beenPressedFor = millis() - firstPress;
+    firstPress = millis();
   }
+  estadoAnterior = estadoAtual;
+  if(estadoAtual)
+    beenPressedFor = 0;
+  else
+    beenPressedFor = millis() - firstPress;
+
   return beenPressedFor;
 }

@@ -1,0 +1,22 @@
+{
+    "name": "pushButton",
+    "version": "1.0.2",
+    "description": "Supports wasPressed, wasReleased, beenPressedFor and retentionState methods using non-blocking code (delay function is not used).",
+    "keywords": "push button, non-blocking",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/italo-coelho/pushButton.git"
+    },
+    "authors":
+    [
+      {
+        "name": "Ítalo Coelho",
+        "email": "italo.code@proton.me",
+        "url": "https://github.com/italo-coelho",
+        "maintainer": true
+      }
+    ],
+    "frameworks": "arduino",
+    "platforms": "*"
+  }

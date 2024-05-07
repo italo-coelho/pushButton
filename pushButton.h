@@ -1,25 +1,34 @@
 #ifndef PUSHBUTTON_H
 #define PUSHBUTTON_H
 
+#define DEBOUNCE 50
+#define PIN_MODE 0x05 //INPUT_PULLUP
+
+#include <Arduino.h>
+
 class pushButton
 {
   public:
-    //Constructor
-    pushButton(int pin);
-    //Interface
+    pushButton(uint8_t pin);
+    pushButton(uint8_t pin, uint16_t debounce, uint8_t pin_mode = PIN_MODE);
+
     bool wasPressed(void);
-    bool wasPressed(int _debounce);
     bool wasReleased(void);
     bool retentionState(void);
-    uint64_t pressedFor(void);
+    uint32_t pressedFor(void);
+    uint32_t releasedAfter(void);
+
   private:
-    //Control Variables
-    int _pin;
-    uint64_t firstPress = 0;
-    uint64_t beenPressedFor = 0;    
-    bool retention = false;
-    bool estadoAtual = HIGH;
-    bool estadoAnterior = HIGH;
+    uint8_t _pin;
+    uint8_t _pinMode;
+    uint16_t _debounce;
+    uint32_t _pressTime = 0;
+    uint32_t _pressDuration = 0;    
+    bool _retention = false;
+    bool _current = true;
+    bool _previous = true;
+
+    uint32_t time();
 };
 
 #endif

@@ -1,8 +1,8 @@
 {
     "name": "pushButton",
-    "version": "1.0.2",
-    "description": "Supports wasPressed, wasReleased, beenPressedFor and retentionState methods using non-blocking code (delay function is not used).",
-    "keywords": "push button, non-blocking",
+    "version": "1.0.3",
+    "description": "Supports wasPressed, wasReleased, beenPressedFor, releasedAfter and retentionState methods using non-blocking code (delay function is not used).",
+    "keywords": "pushbutton, non-blocking, button, switch",
     "repository":
     {
       "type": "git",

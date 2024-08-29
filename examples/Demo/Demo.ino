@@ -1,23 +1,24 @@
 /*
- * Example shows the use of Push Buttons:
+ * This example shows the use of pushButton's:
  * - wasPressed: determines if the button was pressed
  * - retentionState: returns the retention state of the button as toggle switch
  * - pressedFor: returns how long the button has been pressed for (in miliseconds)
  * 
- * Push Button -> pin 12
  * LED -> pin 10
+ * Push Button -> pin 12
+ *             -> GND
  */
 
 #include "pushButton.h"
 
-#define LED 10
-#define BUTTON 12
+const int LED_PIN = 10;
+const int BUTTON_PIN = 12;
 
-pushButton button(12);
+pushButton button(BUTTON_PIN);
 
 void setup() 
 {
-  pinMode(LED, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
   Serial.begin(9600);
 }
 
@@ -39,5 +40,5 @@ void loop()
   else
     Serial.println("Retention State: OFF");
 
-  digitalWrite(LED, button.retentionState());
+  digitalWrite(LED_PIN, button.retentionState());
 }

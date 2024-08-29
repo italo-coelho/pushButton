@@ -1,5 +1,6 @@
 pushButton	KEYWORD1
 
+nClick  KEYWORD2
 wasPressed	KEYWORD2
 wasReleased	KEYWORD2
 retentionState	KEYWORD2

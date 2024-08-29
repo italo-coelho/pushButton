@@ -135,6 +135,34 @@ uint32_t pushButton::releasedAfter()
 }
 
 /*
+  \brief Get Multiple Fast Clicks
+  \param timeout Maximum time in ms allowed between clicks (default = 500ms)
+  \note Will return the number of clicks performed after timeout has passed from the last click, otherwise, always returns 0.
+  \return Number of clicks
+*/
+uint8_t pushButton::nClick(uint32_t timeout)
+{
+  uint8_t answer;
+  static uint8_t clicks = 0;
+  static uint32_t lastClick = 0;
+
+  if(wasPressed())
+  {
+    clicks++;
+    lastClick = time();
+  }
+
+  if(time() - lastClick >= timeout)
+  {
+    answer = clicks;
+    clicks = 0;
+  }
+  else
+    answer = 0;
+  return answer;
+}
+
+/*
   \brief Calculate the time since the code started running. 
   \note Does NOT use millis() when compiled for ESP32 to avoid crashes while using FreeRTOS.
   \return Time in Miliseconds

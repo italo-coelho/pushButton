@@ -17,6 +17,7 @@ class pushButton
     bool retentionState(void);
     uint32_t pressedFor(void);
     uint32_t releasedAfter(void);
+    uint8_t nClick(uint32_t timeout = 500);
 
   private:
     uint8_t _pin;

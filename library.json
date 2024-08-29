@@ -1,7 +1,7 @@
 {
     "name": "pushButton",
-    "version": "1.0.4",
-    "description": "Supports wasPressed, wasReleased, beenPressedFor, releasedAfter and retentionState methods using non-blocking code (delay function is not used). When using ESP32, the library will use xTaskGetTickCount() instead of millis() to avoid FreeRTOS task instability.",
+    "version": "1.0.5",
+    "description": "Supports wasPressed, nClick, wasReleased, beenPressedFor, releasedAfter and retentionState methods using non-blocking code (delay function is not used). When using ESP32, the library will use xTaskGetTickCount() instead of millis() to avoid FreeRTOS task instability.",
     "keywords": "pushbutton, non-blocking, button, switch",
     "repository":
     {

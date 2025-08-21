@@ -29,15 +29,14 @@ pushButton::pushButton(uint8_t pin, uint16_t debounce, uint8_t pin_mode)
 bool pushButton::wasPressed()
 {
   bool answer = false;
-  static uint32_t then = time();
 
   _current = digitalRead(_pin);
   if(!_current && _previous)
   {
-    if(time() - then > DEBOUNCE)
+    if(time() - _thenPressed > _debounce)
     {
       answer = true;
-      then = time();
+      _thenPressed = time();
     }
   }
   _previous = _current;
@@ -53,15 +52,14 @@ bool pushButton::wasPressed()
 bool pushButton::wasReleased()
 {
   bool answer = false;
-  static uint32_t then = time();
 
   _current = digitalRead(_pin);
   if(_current && !_previous)
   {
-    if(time() - then > _debounce)
+    if(time() - _thenReleased > _debounce)
     {
       answer = true;
-      then = time();
+      _thenReleased = time();
     }
   }
   _previous = _current;
@@ -76,15 +74,13 @@ bool pushButton::wasReleased()
 */
 bool pushButton::retentionState()
 {
-  static uint32_t then = time();
-
   _current = digitalRead(_pin);
   if(!_current && _previous)
   {
-    if(time() - then > _debounce)
+    if(time() - _thenRetention > _debounce)
     {
       _retention = !_retention;
-      then = time();
+      _thenRetention = time();
     }
   }
   _previous = _current;
@@ -122,14 +118,13 @@ uint32_t pushButton::releasedAfter()
 {
   uint32_t answer;
   uint32_t duration = pressedFor();
-  static uint32_t pDuration = duration;
 
-  if((duration == 0) && (pDuration > 0))
-    answer = pDuration;
+  if((duration == 0) && (_pDuration > 0))
+    answer = _pDuration;
   else
     answer = 0;
   
-  pDuration = duration;
+  _pDuration = duration;
 
   return answer;
 }
@@ -143,19 +138,17 @@ uint32_t pushButton::releasedAfter()
 uint8_t pushButton::nClick(uint32_t timeout)
 {
   uint8_t answer;
-  static uint8_t clicks = 0;
-  static uint32_t lastClick = 0;
 
   if(wasPressed())
   {
-    clicks++;
-    lastClick = time();
+    _clicks++;
+    _lastClick = time();
   }
 
-  if(time() - lastClick >= timeout)
+  if(time() - _lastClick >= timeout)
   {
-    answer = clicks;
-    clicks = 0;
+    answer = _clicks;
+    _clicks = 0;
   }
   else
     answer = 0;

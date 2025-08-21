@@ -29,6 +29,13 @@ class pushButton
     bool _current = true;
     bool _previous = true;
 
+    uint8_t _clicks = 0;
+    uint32_t _lastClick = 0;
+    uint32_t _pDuration = 0;
+    uint32_t _thenPressed = 0;
+    uint32_t _thenReleased = 0;
+    uint32_t _thenRetention = 0;
+
     uint32_t time();
 };
 
